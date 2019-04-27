@@ -23,7 +23,7 @@ namespace ReactNativeConfig
 
         public string envFor(string key)
         {
-            return DOT_ENV[key];
+            return DOT_ENV[key] as string;
         }
 
         public Dictionary<string,object> env()
