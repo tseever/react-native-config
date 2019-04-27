@@ -212,6 +212,7 @@ This is still a bit experimental and dirty – let us know if you have a better
 #### Windows (UWP)
 
 The basic idea in Windows is to have one Build Configuration per environment file, so you can easily alternate between them.
+The environment will be set by the configuration name, but the build steps are shared by the entire solution.
 
 Start by creating a new Build Configuration:
 
@@ -221,15 +222,16 @@ Start by creating a new Build Configuration:
 - Give it a proper name in the Name field. For instance: "Myapp (staging)"
 - Select an existing config to Copy settings from
 
-Then close the config manager, and edit the new Build Config to make it use a different env file. With the new config still selected as the active config:
+Then close the config manager, and edit the new Build Events for the solution to setup using a different env file.
 
 - Find the project in the Solution Explorer
 - Right click on the project and choose Properties
 - Click on the Build Events tab of the project properties pane
 - Where it says "Pre-build event command line", type:
   ```
-  echo .env.staging > %TEMP%\envfile   # replace .env.staging for your file
+  echo echo .env.$(ConfigurationName) > %TEMP%\envfile
   ```
+  That will specify to use the .env file associated with the active config.  If you config is set to Staging, then it will use .env.Staging.
 
 ## Troubleshooting
 
