@@ -92,7 +92,7 @@ namespace ReactNativeConfig
 {{
     partial class ReactNativeConfigModule : NativeModuleBase
     {{
-        Dictionary<string,object> DOT_ENV = new Dictionary<string,object>()
+        protected Dictionary<string,object> DOT_ENV = new Dictionary<string,object>()
         {{
 {0}
         }};

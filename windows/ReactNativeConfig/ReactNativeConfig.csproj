@@ -144,7 +144,13 @@
   <PropertyGroup>
     <PreBuildEvent>powershell.exe -ExecutionPolicy RemoteSigned -file "$(ProjectDir)BuildDotenvConfig.ps1" -ProjectDir $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Target Name="BeforeBuild">
+    <Delete Files="$(ProjectDir)\GeneratedDotEnv.cs" ContinueOnError="true" />
+  </Target>
+  <Target Name="BeforeRebuild">
+    <Delete Files="$(ProjectDir)\GeneratedDotEnv.cs" ContinueOnError="true" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

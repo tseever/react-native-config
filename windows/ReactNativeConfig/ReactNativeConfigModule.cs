@@ -26,6 +26,11 @@ namespace ReactNativeConfig
             return DOT_ENV[key];
         }
 
+        public Dictionary<string,object> env()
+        {
+            return DOT_ENV;
+        }
+
         public override JObject ModuleConstants
         {
             get

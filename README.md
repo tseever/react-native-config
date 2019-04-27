@@ -133,6 +133,22 @@ __RN_CONFIG_API_URL
 
 Note: Requires specific setup (see below) and a `Product > Clean` is required after changing the values to see the updated values.
 
+### Windows (uwP)
+
+Read variables declared in `.env` from your C# classes like:
+
+```c#
+// using header
+using ReactNativeConfig;
+
+// then read individual keys like:
+string apiUrl = ReactNativeConfigModule.envFor("API_URL");
+
+// or just fetch the whole config
+Dictionary<string,object> config = ReactNativeConfigModule.env();
+```
+
+Note: Requires specific setup (see below) and a `Build > Clean Solution` is required after changing the values to see the updated values.
 
 ### Different environments
 
