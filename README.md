@@ -193,6 +193,28 @@ Then edit the newly created scheme to make it use a different env file. From the
 
 This is still a bit experimental and dirty – let us know if you have a better idea on how to make iOS use different configurations opening a pull request or issue!
 
+#### Windows (UWP)
+
+The basic idea in Windows is to have one Build Configuration per environment file, so you can easily alternate between them.
+
+Start by creating a new Build Configuration:
+
+- In the Visual Studio menu, go to Build > Configuration Manager
+- Click on the Active solution configuration dropdown to display the full list
+- Select <New...> from the list
+- Give it a proper name in the Name field. For instance: "Myapp (staging)"
+- Select an existing config to Copy settings from
+
+Then close the config manager, and edit the new Build Config to make it use a different env file. With the new config still selected as the active config:
+
+- Find the project in the Solution Explorer
+- Right click on the project and choose Properties
+- Click on the Build Events tab of the project properties pane
+- Where it says "Pre-build event command line", type:
+  ```
+  echo ".env.staging" > %TEMP%\envfile   # replace .env.staging for your file
+  ```
+
 ## Troubleshooting
 
 ### Problems with Proguard
@@ -200,7 +222,7 @@ This is still a bit experimental and dirty – let us know if you have a better
 When Proguard is enabled (which it is by default for Android release builds), it can rename the `BuildConfig` Java class in the minification process and prevent React Native Config from referencing it. To avoid this, add an exception to `android/app/proguard-rules.pro`:
 
     -keep class com.mypackage.BuildConfig { *; }
-    
+
 `mypackage` should match the `package` value in your `app/src/main/AndroidManifest.xml` file.
 
 ## Testing

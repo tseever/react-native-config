@@ -2,7 +2,13 @@
 
 ### Upcoming
 
-[Diff](https://github.com/luggit/react-native-config/compare/v0.11.7...master)
+[Diff](https://github.com/luggit/react-native-config/compare/v0.12.0...master)
+
+### 0.12.0
+
+- Windows (UWP) Support
+
+[Diff](https://github.com/luggit/react-native-config/compare/v0.11.7...v0.12.0)
 
 ### 0.11.7
 
