@@ -8,16 +8,17 @@ $defaultEnvFile = ".env"
 
 # pick a custom env file if set
 $customEnvPath = Join-Path $env:temp "envfile"
-"Checking for custom env from {0}" -f $customEnvPath | Write-Output
+"Checking for custom env from {0}" -f $customEnvPath | Write-Host
 if ([IO.File]::Exists($customEnvPath)) {
     $custom_env = 1
     $file = Get-Content -Path $customEnvPath
+    $file = $file -replace '"', "" #strip quotes
 } else {
     $custom_env = 0
     $file = if ($env:ENVFILE) { $env:ENVFILE } else { $defaultEnvFile }
 }
 
-"Reading env from {0}" -f $file | Write-Output
+"Reading env from {0}" -f $file | Write-Host
 
 Function dotenv($ProjectDir, $file, $defaultEnvFile)
 {
@@ -45,7 +46,8 @@ Function dotenv($ProjectDir, $file, $defaultEnvFile)
         }
 
         if (![IO.File]::Exists($defaultEnvPath)) {
-            Write-Information @"
+            Write-Warning @"
+
 **************************
 *** Missing .env file ****
 **************************
@@ -67,12 +69,12 @@ Function dotenv($ProjectDir, $file, $defaultEnvFile)
             $key = if ($null -eq $allmatches[0].Groups['key']) { "" } else { $allmatches[0].Groups['key'] }
             $val = if ($null -eq $allmatches[0].Groups['val']) { "" } else { $allmatches[0].Groups['val'] }
 
-            $val = $val -replace """", """"""
+            # Ensure string (in case of empty value) and escape any quotes present in the value.
+            $val = [string]$val -replace '"', ''
 
             if ($null -ne $key -and $key -ne "") {
                 $h.Add($key, $val)
             }
-        #     #     # Ensure string (in case of empty value) and escape any quotes present in the value.
         }
     }
     return $h
@@ -117,4 +119,4 @@ if ($custom_env) {
     [IO.File]::Delete($customEnvPath)
 }
 
-"Wrote to {0}" -f $path | Write-Output
+"Wrote generated config to {0}" -f $path | Write-Host

@@ -228,7 +228,7 @@ Then close the config manager, and edit the new Build Config to make it use a di
 - Click on the Build Events tab of the project properties pane
 - Where it says "Pre-build event command line", type:
   ```
-  echo ".env.staging" > %TEMP%\envfile   # replace .env.staging for your file
+  echo .env.staging > %TEMP%\envfile   # replace .env.staging for your file
   ```
 
 ## Troubleshooting
