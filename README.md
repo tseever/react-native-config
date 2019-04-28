@@ -221,17 +221,12 @@ Start by creating a new Build Configuration:
 - Select <New...> from the list
 - Give it a proper name in the Name field. For instance: "Myapp (staging)"
 - Select an existing config to Copy settings from
+- Close the configuration manager, select the new config, and run
 
-Then close the config manager, and edit the new Build Events for the solution to setup using a different env file.
-
-- Find the project in the Solution Explorer
-- Right click on the project and choose Properties
-- Click on the Build Events tab of the project properties pane
-- Where it says "Pre-build event command line", type:
+- The ReactNativeConfig project has a pre-build event which records the configuration like below, then loads that to generate the module config source.
   ```
   echo echo .env.$(ConfigurationName) > %TEMP%\envfile
   ```
-  That will specify to use the .env file associated with the active config.  If you config is set to Staging, then it will use .env.Staging.
 
 ## Troubleshooting
 

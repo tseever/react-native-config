@@ -142,7 +142,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>powershell.exe -ExecutionPolicy RemoteSigned -file "$(ProjectDir)BuildDotenvConfig.ps1" -ProjectDir $(ProjectDir)</PreBuildEvent>
+    <PreBuildEvent>echo .env.$(ConfigurationName) &gt; %25TEMP%25\envfile
+
+powershell.exe -ExecutionPolicy RemoteSigned -file "$(ProjectDir)BuildDotenvConfig.ps1" -ProjectDir $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>echo Adding re-build trigger to to ensure env current on next build
