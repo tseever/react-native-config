@@ -214,19 +214,32 @@ This is still a bit experimental and dirty – let us know if you have a better
 The basic idea in Windows is to have one Build Configuration per environment file, so you can easily alternate between them.
 The environment will be set by the configuration name, but the build steps are shared by the entire solution.
 
-Start by creating a new Build Configuration:
+Start by creating a new project to serve as a solution wide dependency that will export the picked build configuration.
 
-- In the Visual Studio menu, go to Build > Configuration Manager
+- In the Visual Studio solution explorer, right click on the solution name
+- Select Add > New Project...
+- Choose Class Library (Universal Windows) as the type
+- Name it `BuildConfig`, and place it under a directory in your solution
+- Click ok, then choose a Target and Minimum SDK version matching the rest of your UWP Solution
+- Right click and choose Properties from the new Project within your solution
+- Choose Build Events from the menu on the left of the properties pane
+- Enter this in the pre-build event:
+    ```
+    echo Exporting envfile as .env.$(ConfigurationName)
+    echo .env.$(ConfigurationName) > %TEMP%\envfile
+    ```
+- Close the properties pane and save the changes
+
+Then add a new Build Configuration to the Solution and BuildConfig project:
+
+- In the Visual Studio menus, go to Build > Configuration Manager
 - Click on the Active solution configuration dropdown to display the full list
 - Select <New...> from the list
 - Give it a proper name in the Name field. For instance: "Myapp (staging)"
 - Select an existing config to Copy settings from
-- Close the configuration manager, select the new config, and run
+- Close the configuration manager, save, select the new config, and run.
 
-- The ReactNativeConfig project has a pre-build event which records the configuration like below, then loads that to generate the module config source.
-  ```
-  echo echo .env.$(ConfigurationName) > %TEMP%\envfile
-  ```
+During the build, the `BuildConfig` project will output a temporary envfile that will trigger re-generation of the `GeneratedDotEnv.cs` config class which contains the new .env details.
 
 ## Troubleshooting
 

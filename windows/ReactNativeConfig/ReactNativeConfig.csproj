@@ -142,8 +142,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>echo .env.$(ConfigurationName) &gt; %25TEMP%25\envfile
-
+    <PreBuildEvent>
 powershell.exe -ExecutionPolicy RemoteSigned -file "$(ProjectDir)BuildDotenvConfig.ps1" -ProjectDir $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
